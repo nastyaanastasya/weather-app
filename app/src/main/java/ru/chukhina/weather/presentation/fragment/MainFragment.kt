@@ -5,5 +5,5 @@ import dagger.hilt.android.AndroidEntryPoint
 import ru.chukhina.weather.R
 
 @AndroidEntryPoint
-class MainFragment: Fragment(R.layout.fragment_search) {
+class MainFragment: Fragment(R.layout.fragment_main) {
 }

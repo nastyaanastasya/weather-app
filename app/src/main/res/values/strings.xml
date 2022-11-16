@@ -16,9 +16,11 @@
 
     <string name="feels_like_title">Feels like</string>
     <string name="humidity_title">Humidity</string>
-    <string name="wind_dir_title">wind</string>
+    <string name="wind_speed_title">Wind speed</string>
+    <string name="wind_dir_title">Wind direction</string>
     <string name="visibility_title">Visibility</string>
     <string name="air_pressure_title">Air pressure</string>
+    <string name="details_title">Weather details</string>
 
     <string name="search_hint">Search</string>
 

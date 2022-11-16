@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BasicTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="SmallTextStyle" parent="BasicTextStyle">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="LargeTextStyle" parent="BasicTextStyle">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="ExtraLargeTextStyle" parent="BasicTextStyle">
+        <item name="android:textSize">32sp</item>
+    </style>
+</resources>

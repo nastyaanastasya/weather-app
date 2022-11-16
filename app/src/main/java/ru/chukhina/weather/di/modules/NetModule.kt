@@ -10,14 +10,16 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.chukhina.weather.data.api.OpenMeteoApi
+import ru.chukhina.weather.data.api.OpenWeatherApi
 import ru.chukhina.weather.di.qualifiers.ApiKey
 import ru.chukhina.weather.di.qualifiers.ApiLang
 import ru.chukhina.weather.di.qualifiers.ApiTimeFormat
 import ru.chukhina.weather.di.qualifiers.ApiTimezone
 import ru.chukhina.weather.di.qualifiers.ApiUnits
 import ru.chukhina.weather.di.qualifiers.Logger
-import ru.chukhina.weather.di.qualifiers.OpenMeteoApi
-import ru.chukhina.weather.di.qualifiers.OpenWeatherApi
+import ru.chukhina.weather.di.qualifiers.OpenMeteoApiClient
+import ru.chukhina.weather.di.qualifiers.OpenWeatherApiClient
 
 private const val OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/"
 private const val OPEN_METEO_BASE_URL = "https://api.open-meteo.com/v1/"
@@ -126,7 +128,7 @@ class NetModule {
     }
 
     @Provides
-    @OpenWeatherApi
+    @OpenWeatherApiClient
     fun providesOpenWeatherOkhttp(
         @ApiKey apiKeyInterceptor: Interceptor,
         @ApiUnits apiUnitsInterceptor: Interceptor,
@@ -145,7 +147,7 @@ class NetModule {
             .build()
 
     @Provides
-    @OpenMeteoApi
+    @OpenMeteoApiClient
     fun providesOpenMeteoOkhttp(
         @ApiTimezone timezoneInterceptor: Interceptor,
         @ApiTimeFormat timeFormatInterceptor: Interceptor,
@@ -166,7 +168,7 @@ class NetModule {
 
     @Provides
     fun providesOpenWeatherApi(
-        @OpenWeatherApi okHttpClient: OkHttpClient,
+        @OpenWeatherApiClient okHttpClient: OkHttpClient,
         gsonConverter: GsonConverterFactory
     ): OpenWeatherApi =
         Retrofit.Builder()
@@ -178,7 +180,7 @@ class NetModule {
 
     @Provides
     fun providesOpenMeteoApi(
-        @OpenMeteoApi okHttpClient: OkHttpClient,
+        @OpenMeteoApiClient okHttpClient: OkHttpClient,
         gsonConverter: GsonConverterFactory
     ): OpenMeteoApi =
         Retrofit.Builder()
