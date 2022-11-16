@@ -17,8 +17,11 @@ class WeatherRepositoryImpl @Inject constructor(
     override suspend fun getWeatherById(id: Int): WeatherDetails =
         mapper.mapWeatherData(openWeatherApi.getWeatherById(id))
 
-    override suspend fun getWeatherByName(name: String): WeatherDetails =
-        mapper.mapWeatherData(openWeatherApi.getWeatherByCityName(name))
+    override suspend fun getWeatherByCoordinates(lat: Double, lon: Double): WeatherDetails =
+        mapper.mapWeatherData(openWeatherApi.getWeatherByCoordinates(lat, lon))
+
+    override suspend fun getCityIdByName(name: String): Int =
+        mapper.mapWeatherData(openWeatherApi.getWeatherByName(name)).id
 
     override suspend fun getWeatherForecast(lat: Double, lon: Double): WeatherForecast {
         val forecast = openMeteoApi.getWeatherForecast(lat, lon)
