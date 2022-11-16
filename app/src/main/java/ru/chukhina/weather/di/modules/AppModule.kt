@@ -20,5 +20,5 @@ class AppModule {
         LocationServices.getFusedLocationProviderClient(context)
 
     @Provides
-    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
