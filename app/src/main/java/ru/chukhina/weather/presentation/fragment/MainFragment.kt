@@ -19,12 +19,13 @@ import ru.chukhina.weather.domain.model.WeatherDetails
 import ru.chukhina.weather.domain.model.WeatherForecast
 import ru.chukhina.weather.domain.model.common.WeatherSimpleDaily
 import ru.chukhina.weather.domain.model.common.WeatherSimpleHourly
-import ru.chukhina.weather.presentation.extensions.hideLoading
-import ru.chukhina.weather.presentation.extensions.showLoading
+import ru.chukhina.weather.presentation.extension.hideLoading
+import ru.chukhina.weather.presentation.extension.navigateBack
+import ru.chukhina.weather.presentation.extension.showLoading
+import ru.chukhina.weather.presentation.helper.ViewVisibilityStateHelper
 import ru.chukhina.weather.presentation.rv.daily.DailyForecastAdapter
 import ru.chukhina.weather.presentation.rv.hourly.HourlyForecastAdapter
 import ru.chukhina.weather.presentation.viewmodel.MainViewModel
-
 
 @AndroidEntryPoint
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -42,6 +43,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             viewModel.getLocation()
         }
 
+    private var isSearched = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMainBinding.bind(view)
@@ -49,22 +52,17 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         initObservers()
         initListeners()
-
-        if (cityId != -1) {
-            viewModel.getWeather(cityId)
-            setShowIconsState(false)
-        } else {
-            setShowIconsState(true)
-        }
+        initUiState()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (!checkPermissions()) {
-            requestPermissions()
+    private fun initUiState() {
+        if (cityId != -1) {
+            viewModel.getWeather(cityId)
+            setIsCitySearched(true)
+        } else {
+            getLocation()
+            setIsCitySearched(false)
         }
-        viewModel.getLocation()
     }
 
     private fun initListeners() {
@@ -116,6 +114,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             ivWeatherIcon.load(data.weatherIconUrl)
         }
         viewModel.getWeatherForecast(data.coordinates)
+
+        if (isSearched) {
+            setToolbarTitle(data.name)
+        }
     }
 
     private fun updateWeatherForecast(forecast: WeatherForecast) {
@@ -135,16 +137,18 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
     }
 
-    private fun setShowIconsState(state: Boolean) {
-        val isVisible = when (state) {
-            true -> View.VISIBLE
-            false -> View.INVISIBLE
-        }
+    private fun setIsCitySearched(state: Boolean) {
         with(binding) {
-            iconPlace.visibility = isVisible
-            iconSearch.visibility = isVisible
+            setViewVisibilityState(appBar, state)
+            setViewVisibilityState(iconSearch, !state)
+            setViewVisibilityState(iconPlace, !state)
+            setViewVisibilityState(tvCity, !state)
         }
+        isSearched = true
     }
+
+    private fun setViewVisibilityState(view: View, state: Boolean) =
+        ViewVisibilityStateHelper().setVisibility(view, state)
 
     private fun loadData(state: Boolean) {
         with(binding) {
@@ -159,6 +163,22 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 }
             }
         }
+    }
+
+    private fun setToolbarTitle(title: String) {
+        with(binding) {
+            toolbar.title = title
+            toolbar.setNavigationOnClickListener {
+                navigateBack()
+            }
+        }
+    }
+
+    private fun getLocation() {
+        if (!checkPermissions()) {
+            requestPermissions()
+        }
+        viewModel.getLocation()
     }
 
     private fun requestPermissions() {

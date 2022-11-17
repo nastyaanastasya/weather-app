@@ -21,8 +21,9 @@
     <string name="visibility_title">Visibility</string>
     <string name="air_pressure_title">Air pressure</string>
     <string name="details_title">Weather details</string>
+    <string name="search_title">Search</string>
 
-    <string name="search_hint">Search</string>
+    <string name="search_hint">Enter city name</string>
 
     <string name="city_not_found_error">City not found</string>
 </resources>

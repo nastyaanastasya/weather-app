@@ -1,4 +1,4 @@
-package ru.chukhina.weather.presentation.extensions
+package ru.chukhina.weather.presentation.extension
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment

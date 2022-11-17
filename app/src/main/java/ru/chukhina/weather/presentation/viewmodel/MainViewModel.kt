@@ -23,15 +23,15 @@ class MainViewModel @Inject constructor(
     private val getWeatherForecastByCoordinatesUseCase: GetWeatherForecastByCoordinatesUseCase
 ) : ViewModel() {
 
-    private var _weatherForecast: MutableLiveData<Result<WeatherForecast>> =
-        MutableLiveData()
-    val weatherForecast: LiveData<Result<WeatherForecast>?> = _weatherForecast
+    private var _weatherForecast: SingleLiveEvent<Result<WeatherForecast>> =
+        SingleLiveEvent()
+    val weatherForecast: SingleLiveEvent<Result<WeatherForecast>> = _weatherForecast
 
-    private var _weatherData: MutableLiveData<Result<WeatherDetails>> = MutableLiveData()
-    val weatherData: LiveData<Result<WeatherDetails>?> = _weatherData
+    private var _weatherData: SingleLiveEvent<Result<WeatherDetails>> = SingleLiveEvent()
+    val weatherData: SingleLiveEvent<Result<WeatherDetails>> = _weatherData
 
     private var _coordinates: MutableLiveData<Result<Coordinates>> = MutableLiveData()
-    val coordinates: LiveData<Result<Coordinates>?> = _coordinates
+    val coordinates: LiveData<Result<Coordinates>> = _coordinates
 
     fun getLocation() {
         viewModelScope.launch {

@@ -10,6 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            style="@style/LargeTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?colorPrimary"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+                app:title="@string/city_example"
+                app:titleTextAppearance="@style/MediumTextStyle"
+                app:titleTextColor="?android:attr/textColorPrimary" />
+        </com.google.android.material.appbar.AppBarLayout>
+
         <ImageView
             android:id="@+id/icon_place"
             android:layout_width="@dimen/text_size_32"
@@ -39,9 +60,11 @@
             style="@style/LargeTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/icon_search"
-            app:layout_constraintStart_toEndOf="@id/icon_place"
+            android:layout_marginTop="@dimen/margin_16"
+            app:layout_constraintEnd_toStartOf="@id/gl_vert_end"
+            app:layout_constraintStart_toEndOf="@id/gl_vert_start"
             app:layout_constraintTop_toBottomOf="@id/gl_hor_start"
+            app:layout_goneMarginTop="@dimen/margin_4"
             tools:text="@string/city_example" />
 
         <TextView

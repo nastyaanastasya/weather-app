@@ -1,7 +1,5 @@
 package ru.chukhina.weather.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,9 +11,8 @@ import ru.chukhina.weather.domain.usecase.weather.GetCityIdByNameUseCase
 class SearchViewModel @Inject constructor(
     private val getWeatherByCityNameUseCase: GetCityIdByNameUseCase
 ) : ViewModel() {
-
-    private val _weatherData: MutableLiveData<Result<Int>> = MutableLiveData()
-    val weatherData: LiveData<Result<Int>?> = _weatherData
+    private val _weatherData: SingleLiveEvent<Result<Int>> = SingleLiveEvent()
+    val weatherData: SingleLiveEvent<Result<Int>> = _weatherData
 
     fun getWeather(query: String) {
         viewModelScope.launch {

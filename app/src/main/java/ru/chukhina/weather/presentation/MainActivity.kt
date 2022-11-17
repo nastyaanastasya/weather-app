@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.chukhina.weather.R
-import ru.chukhina.weather.presentation.extensions.findController
+import ru.chukhina.weather.presentation.extension.findController
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
