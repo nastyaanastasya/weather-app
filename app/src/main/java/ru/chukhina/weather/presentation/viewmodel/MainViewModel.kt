@@ -1,42 +1,58 @@
 package ru.chukhina.weather.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.chukhina.weather.domain.model.WeatherDetails
 import ru.chukhina.weather.domain.model.WeatherForecast
 import ru.chukhina.weather.domain.model.common.Coordinates
+import ru.chukhina.weather.domain.usecase.location.GetLocationUseCase
 import ru.chukhina.weather.domain.usecase.weather.GetWeatherByCoordinatesUseCase
 import ru.chukhina.weather.domain.usecase.weather.GetWeatherByIdUseCase
 import ru.chukhina.weather.domain.usecase.weather.GetWeatherForecastByCoordinatesUseCase
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    private val getLocationUseCase: GetLocationUseCase,
     private val getWeatherByIdUseCase: GetWeatherByIdUseCase,
     private val getWeatherByCoordinatesUseCase: GetWeatherByCoordinatesUseCase,
     private val getWeatherForecastByCoordinatesUseCase: GetWeatherForecastByCoordinatesUseCase
 ) : ViewModel() {
 
-    private var _weatherForecast: MutableStateFlow<Result<WeatherForecast>?> =
-        MutableStateFlow(null)
-    val weatherForecast: StateFlow<Result<WeatherForecast>?> = _weatherForecast.asStateFlow()
+    private var _weatherForecast: MutableLiveData<Result<WeatherForecast>> =
+        MutableLiveData()
+    val weatherForecast: LiveData<Result<WeatherForecast>?> = _weatherForecast
 
-    private var _weatherData: MutableStateFlow<Result<WeatherDetails>?> = MutableStateFlow(null)
-    val weatherData: StateFlow<Result<WeatherDetails>?> = _weatherData.asStateFlow()
+    private var _weatherData: MutableLiveData<Result<WeatherDetails>> = MutableLiveData()
+    val weatherData: LiveData<Result<WeatherDetails>?> = _weatherData
+
+    private var _coordinates: MutableLiveData<Result<Coordinates>> = MutableLiveData()
+    val coordinates: LiveData<Result<Coordinates>?> = _coordinates
+
+    fun getLocation() {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                getLocationUseCase()
+            }.onSuccess {
+                _coordinates.value = Result.success(it)
+            }.onFailure {
+                _coordinates.value = Result.failure(it)
+            }
+        }
+    }
 
     fun getWeather(id: Int) {
         viewModelScope.launch {
             kotlin.runCatching {
                 getWeatherByIdUseCase(id)
             }.onSuccess {
-                _weatherData.emit(Result.success(it))
+                _weatherData.value = Result.success(it)
             }.onFailure {
-                _weatherData.emit(Result.failure(it))
+                _weatherData.value = Result.failure(it)
             }
         }
     }
@@ -46,9 +62,9 @@ class MainViewModel @Inject constructor(
             kotlin.runCatching {
                 getWeatherByCoordinatesUseCase(coordinates)
             }.onSuccess {
-                _weatherData.emit(Result.success(it))
+                _weatherData.value = Result.success(it)
             }.onFailure {
-                _weatherData.emit(Result.failure(it))
+                _weatherData.value = Result.failure(it)
             }
         }
     }
@@ -58,9 +74,9 @@ class MainViewModel @Inject constructor(
             kotlin.runCatching {
                 getWeatherForecastByCoordinatesUseCase(coordinates)
             }.onSuccess {
-                _weatherForecast.emit(Result.success(it))
+                _weatherForecast.value = Result.success(it)
             }.onFailure {
-                _weatherForecast.emit(Result.failure(it))
+                _weatherForecast.value = Result.failure(it)
             }
         }
     }

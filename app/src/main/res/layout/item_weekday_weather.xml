@@ -8,42 +8,40 @@
 
     <TextView
         android:id="@+id/tv_weekday"
-        style="@style/BasicTextStyle"
+        style="@style/SmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/weekday_example" />
 
     <ImageView
-        android:id="@+id/iv_icon"
+        android:id="@+id/iv_daily_icon"
         android:layout_width="@dimen/image_small_40"
         android:layout_height="@dimen/image_small_40"
-        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_marginStart="@dimen/margin_80"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_weather_state"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/tv_weekday"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_weather_state"
-        style="@style/BasicTextStyle"
+        style="@style/SmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_min_max_temp"
-        app:layout_constraintStart_toEndOf="@id/iv_icon"
+        app:layout_constraintStart_toEndOf="@id/iv_daily_icon"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
         tools:text="@string/weather_state_example" />
 
     <TextView
         android:id="@+id/tv_min_max_temp"
-        style="@style/BasicTextStyle"
+        style="@style/SmallTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

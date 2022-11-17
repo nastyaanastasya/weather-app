@@ -4,7 +4,7 @@ import javax.inject.Inject
 import ru.chukhina.weather.data.helper.WeatherStateHelper
 import ru.chukhina.weather.domain.converter.ImageIconConverter
 
-private const val BASE_IMAGE_URL = "http://openweathermap.org/img/wn/"
+private const val BASE_IMAGE_URL = "https://openweathermap.org/img/wn/"
 private const val IMAGE_URL_SUFFIX = "@2x.png"
 
 class ImageIconConverterImpl @Inject constructor() : ImageIconConverter {

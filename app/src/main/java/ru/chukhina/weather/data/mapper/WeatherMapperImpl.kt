@@ -1,6 +1,7 @@
 package ru.chukhina.weather.data.mapper
 
 import javax.inject.Inject
+import ru.chukhina.weather.data.helper.CurrentTimeHelper
 import ru.chukhina.weather.data.model.details.WeatherResponse
 import ru.chukhina.weather.data.model.forecast.common.Daily
 import ru.chukhina.weather.data.model.forecast.common.Hourly
@@ -17,6 +18,8 @@ import ru.chukhina.weather.domain.model.common.WeatherSimpleHourly
 
 private const val HOURS_IN_A_DAY = 24
 private const val DAYS_IN_A_WEEK = 7
+
+private const val WEEKDAY_TODAY_DESC = "Today"
 
 class WeatherMapperImpl @Inject constructor(
     private val coordinatesConverter: CoordinatesConverter,
@@ -47,15 +50,24 @@ class WeatherMapperImpl @Inject constructor(
     override fun mapDailyWeatherForecast(data: Daily): List<WeatherSimpleDaily> {
         val list = mutableListOf<WeatherSimpleDaily>()
         for (i in 0 until DAYS_IN_A_WEEK) {
+            val minMaxTemp = weatherDataConverter.convertMinMaxTempToString(
+                data.temperature2mMin[i],
+                data.temperature2mMax[i]
+            )
+            val weatherState =
+                weatherStateConverter.convertWmoCodeToWeatherStateString(data.weathercode[i])
+            val weekday = when (i) {
+                0 -> WEEKDAY_TODAY_DESC
+                else -> dateTimeConverter.convertTimeToWeekdayString(data.time[i])
+            }
+            val iconUrl = imageIconConverter.convertWmoWeatherCodeToIconUrl(data.weathercode[i])
+
             list.add(
                 WeatherSimpleDaily(
-                    weatherDataConverter.convertMinMaxTempToString(
-                        data.temperature2mMin[i],
-                        data.temperature2mMax[i]
-                    ),
-                    weatherStateConverter.convertWmoCodeToWeatherStateString(data.weathercode[i]),
-                    dateTimeConverter.convertTimeToWeekdayString(data.time[i]),
-                    imageIconConverter.convertWmoWeatherCodeToIconUrl(data.weathercode[i])
+                    minMaxTemp,
+                    weatherState,
+                    weekday,
+                    iconUrl
                 )
             )
         }
@@ -63,8 +75,10 @@ class WeatherMapperImpl @Inject constructor(
     }
 
     override fun mapHourlyWeatherForecast(data: Hourly): List<WeatherSimpleHourly> {
+        val offset = CurrentTimeHelper().getCurrentTimeOffset() + 1
+
         val list = mutableListOf<WeatherSimpleHourly>()
-        for (i in 0 until HOURS_IN_A_DAY) {
+        for (i in offset until HOURS_IN_A_DAY + offset) {
             list.add(
                 WeatherSimpleHourly(
                     weatherDataConverter.convertTempToString(data.temperature2m[i]),

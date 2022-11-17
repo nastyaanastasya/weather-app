@@ -25,7 +25,7 @@ private const val OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/data/2
 private const val OPEN_METEO_BASE_URL = "https://api.open-meteo.com/v1/"
 
 private const val API_KEY_KEY = "appid"
-private const val API_KEY_VALUE = "251c40b92d5a3380ef4a0836a8dd088a"
+private const val API_KEY_VALUE = "92c1e9e966b85d6ade57930aa7627f8b"
 
 private const val API_UNITS_KEY = "units"
 private const val API_UNITS_VALUE = "metric"
@@ -37,7 +37,7 @@ private const val API_TIME_FORMAT_KEY = "timeformat"
 private const val API_TIME_FORMAT_VALUE = "unixtime"
 
 private const val API_TIMEZONE_KEY = "timezone"
-private const val API_TIMEZONE_VALUE = "Europe%2FMoscow"
+private const val API_TIMEZONE_VALUE = "Europe/Moscow"
 
 @Module
 @InstallIn(SingletonComponent::class)

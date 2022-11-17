@@ -6,18 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import ru.chukhina.weather.R
+import ru.chukhina.weather.databinding.FragmentMainBinding
 import ru.chukhina.weather.presentation.MainActivity
 
 fun Fragment.navigateBack() {
     findNavController().popBackStack()
-}
-
-fun Fragment.showMessage(message: String) {
-    Snackbar.make(
-        requireActivity().findViewById(R.id.container),
-        message,
-        Snackbar.LENGTH_LONG
-    ).show()
 }
 
 fun Fragment.showLoading() {
