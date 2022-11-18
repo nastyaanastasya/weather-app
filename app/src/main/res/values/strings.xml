@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">Weather App</string>
+    <string name="app_name">Weather</string>
+
+    <string name="city_example">Kazan</string>
+    <string name="temp_example">0°C</string>
+    <string name="dt_example">Nov 15 Tue</string>
+    <string name="min_max_temp_example">-3/-6°C</string>
+    <string name="weather_state_example">Cloudy</string>
+    <string name="daytime_example">22:00</string>
+    <string name="weekday_example">Fri</string>
+    <string name="humidity_example">65%</string>
+    <string name="wind_dir_example">NS</string>
+    <string name="wind_speed_example">14 km/h</string>
+    <string name="visibility_example">10 km</string>
+    <string name="air_pressure_example">1000 hPa</string>
+
+    <string name="feels_like_title">Feels like</string>
+    <string name="humidity_title">Humidity</string>
+    <string name="wind_speed_title">Wind speed</string>
+    <string name="wind_dir_title">Wind direction</string>
+    <string name="visibility_title">Visibility</string>
+    <string name="air_pressure_title">Air pressure</string>
+    <string name="details_title">Weather details</string>
+    <string name="search_title">Search</string>
+
+    <string name="search_hint">Enter city name</string>
+
+    <string name="city_not_found_error">City not found</string>
 </resources>
